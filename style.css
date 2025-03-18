@@ -1,0 +1,146 @@
+@font-face {
+  font-family: "Replica Regular";
+  src: url("./fonts/ReplicaLLWeb-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Replica Light";
+  src: url("./fonts/ReplicaLLWeb-Light.woff2") format("woff2");
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  font-family: "Replica Regular", sans-serif;
+}
+
+:root {
+  --accent1: #e2481e;
+  --white: #ffffff;
+}
+
+h1 {
+  font-family: "Replica Light", sans-serif;
+  font-size: 2.625rem;
+  letter-spacing: -0.02em;
+  margin: 0.75rem 0;
+}
+
+body {
+  font-family: "Replica Regular", sans-serif;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  background-color: #e6e6e5;
+  flex-direction: column;
+}
+
+p {
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.grid-wrapper {
+  display: flex;
+  margin: 1.5rem 0;
+}
+
+svg {
+  pointer-events: none;
+  z-index: 99;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+#dom-grid {
+  box-shadow: 1px 1px 0 0 var(--white) inset;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  width: var(--grid-width);
+  height: var(--grid-height);
+  z-index: 3;
+}
+
+#dom-grid .dom-cube {
+  background-color: rgba(0, 0, 0, 0);
+  border-right: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+  width: calc(var(--cube-size));
+  height: var(--cube-size);
+  transition: background-color 1s cubic-bezier(0.05, 0.85, 0.29, 0.95);
+  cursor: default;
+}
+
+#dom-grid .dom-cube:hover {
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+#size-selector {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+#size-selector .size-option {
+  border: 1px solid #aaa;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  border-radius: 2px;
+}
+
+#size-selector .size-option.is-selected {
+  border-color: #333;
+  box-shadow: inset 0 0 0 1px #333;
+}
+
+input {
+  display: block;
+}
+
+.sidebar {
+  width: 320px;
+  position: absolute;
+  border-left: 1px solid #ccc;
+  height: 100vh;
+  right: 0;
+  padding: 2rem;
+}
+
+button {
+  border-radius: 2px;
+  cursor: pointer;
+  background: none;
+  padding: 0.75rem 1.5rem;
+  min-width: 120px;
+  border: 1px solid #aaa;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+button.primary {
+  background-color: #000;
+  color: #fff;
+  border-width: 0;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+}
+
+span.key {
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding-left: 2px;
+  padding-right: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.15);
+}

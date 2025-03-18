@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avatar Creator</title>
+    <link rel="stylesheet" type="text/css" href="./reset.css" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./libs/canvg.js"></script>
+    <script src="./libs/svg-export.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Avatar Creator</h1>
+        <p>
+          A design tool for and by Äventyret. Hold
+          <span class="key">⇧</span> and click on cube to break up diagonal goo.
+        </p>
+        <div id="size-selector">
+          <div data-size="9" class="size-option is-selected">9 x 9</div>
+          <div data-size="11" class="size-option">11 x 11</div>
+        </div>
+      </div>
+      <div class="grid-wrapper">
+        <svg
+          draggable="false"
+          id="result-svg"
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          xmlns="http://www.w3.org/2000/svg"
+        ></svg>
+        <div id="dom-grid"></div>
+      </div>
+      <div class="controls">
+        <button id="clear-button">Clear</button>
+        <button class="primary" id="download-button-svg">Download SVG</button>
+        <button class="primary" id="download-button-png">Download PNG</button>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <p>Corner Chamfer</p>
+      <input
+        type="range"
+        id="chamfer-slider"
+        min="0"
+        max="0.5"
+        value="0.1"
+        step="0.01"
+      />
+    </div>
+  </body>
+  <script src="./script.js"></script>
+</html>
