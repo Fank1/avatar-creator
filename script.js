@@ -15,7 +15,8 @@ var columns = 9;
 var rows = 9;
 var cubeSize = 45;
 var chamferRatio = 0.106;
-var colors = ["#e2481e"];
+var colors = ["#E2481E", "#C19C61", "#000000"];
+var currentColorIndex = 0;
 
 // ------------- CALCULATED DATA -------------
 
@@ -40,6 +41,33 @@ function setCSSvariables() {
   );
 }
 
+function addColorChoicesToDom() {
+  for (let i = 0; i < colors.length; i++) {
+    let newColor = document.createElement("div");
+    newColor.classList.add("color");
+    newColor.style.backgroundColor = colors[i];
+    document.querySelector("#color-selector").append(newColor);
+    newColor.addEventListener("click", function (e) {
+      currentColorIndex = i;
+      updateColors();
+    });
+  }
+}
+
+function updateColors() {
+  const allPaths = document.querySelectorAll("path");
+  for (let i = 0; i < allPaths.length; i++) {
+    allPaths[i].setAttribute("fill", colors[currentColorIndex]);
+  }
+  const allColorsChoices = document.querySelectorAll(".color");
+  for (let i = 0; i < allColorsChoices.length; i++) {
+    allColorsChoices[i].classList.remove("is-selected");
+    if (currentColorIndex === i) {
+      allColorsChoices[i].classList.add("is-selected");
+    }
+  }
+}
+
 function changeGridSize(size) {
   for (let i = 0; i < sizeOptionsDom.length; i++) {
     sizeOptionsDom[i].classList.remove("is-selected");
@@ -53,7 +81,7 @@ function changeGridSize(size) {
         domGrid.innerHTML = "";
         setSVGsize();
         setCSSvariables();
-        createGrid();
+        createDomGrid();
         updatePaths();
       }
     }
@@ -112,7 +140,7 @@ function createGooShape(x, y, direction) {
 
   let tempPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
-  tempPath.setAttribute("fill", colors[0]);
+  tempPath.setAttribute("fill", colors[currentColorIndex]);
 
   //center offsetting
 
@@ -146,7 +174,7 @@ function createGooShape(x, y, direction) {
 
 //----------------------------------------
 
-function createGrid() {
+function createDomGrid() {
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
       let cube = document.createElement("div");
@@ -265,7 +293,7 @@ function updatePaths() {
         "http://www.w3.org/2000/svg",
         "path"
       );
-      tempPath.setAttribute("fill", colors[0]);
+      tempPath.setAttribute("fill", colors[currentColorIndex]);
       let parsedPoints = "M";
       let tempTopLeftChamfer = true;
       let tempTopRightChamfer = true;
@@ -507,6 +535,8 @@ downloadButtonPNG.addEventListener("click", (event) => {
 window.addEventListener("load", (event) => {
   setSVGsize();
   setCSSvariables();
-  createGrid();
+  createDomGrid();
   updatePaths();
+  addColorChoicesToDom();
+  updateColors();
 });
