@@ -74,7 +74,7 @@ function changeGridSize(size) {
     if (size === sizeOptionsDom[i].getAttribute("data-size")) {
       sizeOptionsDom[i].classList.add("is-selected");
       if (size != columns) {
-        console.log("i ran");
+        cubeSize = Math.ceil(405 / size);
         columns = parseInt(size);
         rows = parseInt(size);
         gridData = [];
@@ -188,15 +188,23 @@ function createDomGrid() {
         column: j,
         row: i,
         selected: false,
+        gooHidden: false,
       };
 
       gridData.push(tempCubeObject);
 
       cube.addEventListener("mouseover", (event) => {
-        clickOnCube(j, i, rows * i + j, event.type);
+        if (!event.shiftKey) {
+          clickOnCube(j, i, rows * i + j, event.type);
+        }
       });
       cube.addEventListener("mousedown", (event) => {
-        clickOnCube(j, i, rows * i + j, event.type);
+        if (!event.shiftKey) {
+          clickOnCube(j, i, rows * i + j, event.type);
+        } else if (event.shiftKey) {
+          gridData[cube.id].gooHidden = !gridData[cube.id].gooHidden;
+          updatePaths();
+        }
       });
       domGrid.append(cube);
     }
@@ -227,12 +235,6 @@ function getCubePoints(
     topLeftVectors.push(`${chamferSize + calcedOffsetX} ${calcedOffsetY}`);
   } else {
     topLeftVectors.push(`${calcedOffsetX} ${calcedOffsetY}`);
-    /*let bottomNeighbor = gridData.find(
-			(cube) => cube.column === offsetX && cube.row === offsetY - 1
-		);
-		if (bottomNeighbor.selected === false) {
-			createGooShape(calcedOffsetX, calcedOffsetY, "left");
-		}*/
   }
   if (topRightChamfer) {
     topRightVectors.push(
@@ -374,11 +376,15 @@ function updatePaths() {
             upperNeighbor.selected === false &&
             leftNeighbor.selected === false
           ) {
-            createGooShape(
-              gridData[i].column * cubeSize,
-              gridData[i].row * cubeSize,
-              "left"
-            );
+            if (!gridData[i].gooHidden) {
+              createGooShape(
+                gridData[i].column * cubeSize,
+                gridData[i].row * cubeSize,
+                "left"
+              );
+            } else if (gridData[i].gooHidden) {
+              tempTopLeftChamfer = true;
+            }
           }
         }
       }
@@ -407,11 +413,15 @@ function updatePaths() {
             upperNeighbor.selected === false &&
             rightNeighbor.selected === false
           ) {
-            createGooShape(
-              gridData[i].column * cubeSize + cubeSize,
-              gridData[i].row * cubeSize,
-              "right"
-            );
+            if (!gridData[i].gooHidden) {
+              createGooShape(
+                gridData[i].column * cubeSize + cubeSize,
+                gridData[i].row * cubeSize,
+                "right"
+              );
+            } else if (gridData[i].gooHidden) {
+              tempTopRightChamfer = true;
+            }
           }
         }
       }
@@ -424,9 +434,9 @@ function updatePaths() {
             cube.column === gridData[i].column + 1 &&
             cube.row === gridData[i].row + 1
         );
-        if (bottomRightNeighbor.selected === true) {
-          tempBottomRightChamfer = false;
-        }
+        // if (bottomRightNeighbor.selected === true) {
+        //   tempBottomRightChamfer = false;
+        // }
       }
 
       // ----- check if bottom left has a diagonal neighbor
@@ -437,9 +447,9 @@ function updatePaths() {
             cube.column === gridData[i].column - 1 &&
             cube.row === gridData[i].row + 1
         );
-        if (bottomLeftNeighbor.selected === true) {
-          tempBottomLeftChamfer = false;
-        }
+        // if (bottomLeftNeighbor.selected === true) {
+        //   tempBottomLeftChamfer = true;
+        // }
       }
 
       parsedPoints += getCubePoints(
@@ -452,6 +462,32 @@ function updatePaths() {
       ).join(" L");
       parsedPoints += "Z";
       tempPath.setAttribute("d", parsedPoints);
+      // let animationElement = document.createElementNS(
+      //   "http://www.w3.org/2000/svg",
+      //   "animateTransform"
+      // );
+
+      let animationElement = document
+        .createRange()
+        .createContextualFragment(
+          '<animationTransform begin="0" dur="2s" type="scale" from="0 0" to="1 1" repeatCount="1" />'
+        );
+
+      // var animationElement = document.createDocumentFragment();
+      // animationElement.innerHTML =
+      //   '<animationTransform begin="0" dur="2s" type="scale" from="0 0" to="1 1" repeatCount="1" />';
+
+      // animationElement.setAttribute("begin", "0");
+      // animationElement.setAttribute("dur", "2s");
+      // animationElement.setAttribute("type", "rotate");
+      // animationElement.setAttribute("from", "0 0");
+      // animationElement.setAttribute("to", "1 1");
+      // animationElement.setAttribute("repeatCount", "indefinite");
+      // anime({
+      //   targets: "path",
+      //   rotate: "1turn",
+      //   duration: 1200,
+      // });
       resultSVG.appendChild(tempPath);
     }
   }

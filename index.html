@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="./libs/canvg.js"></script>
     <script src="./libs/svg-export.js"></script>
+    <script src="./libs/anime.js"></script>
   </head>
   <body>
     <div class="container">
@@ -15,7 +16,8 @@
         <h1>Avatar Creator</h1>
         <p>
           A design tool for and by Äventyret. Hold
-          <span class="key">⇧</span> and click on cube to break up diagonal goo.
+          <span class="key">⇧</span> and click on cube to toggle diagonal goo.
+          Always click the bottom-most goo cube.
         </p>
         <div class="controls">
           <div id="size-selector">
@@ -36,23 +38,21 @@
         ></svg>
         <div id="dom-grid"></div>
       </div>
-      <div class="controls">
+      <div class="actions">
         <button id="clear-button">Clear</button>
-        <button class="primary" id="download-button-svg">Download SVG</button>
-        <button class="primary" id="download-button-png">Download PNG</button>
+        <button class="primary download" id="download-button-svg">SVG</button>
+        <button class="primary download" id="download-button-png">PNG</button>
       </div>
-    </div>
-
-    <div class="sidebar">
-      <p>Corner Chamfer</p>
-      <input
-        type="range"
-        id="chamfer-slider"
-        min="0"
-        max="0.5"
-        value="0.1"
-        step="0.01"
-      />
+      <div class="advanced">
+        <input
+          type="range"
+          id="chamfer-slider"
+          min="0"
+          max="0.5"
+          value="0.1"
+          step="0.01"
+        />
+      </div>
     </div>
   </body>
   <script src="./script.js"></script>

@@ -23,7 +23,7 @@ h1 {
   font-family: "Replica Light", sans-serif;
   font-size: 2.625rem;
   letter-spacing: -0.02em;
-  margin: 0.75rem 0;
+  margin: 1rem 0;
 }
 
 body {
@@ -36,7 +36,8 @@ body {
 }
 
 p {
-  font-size: 0.9rem;
+  line-height: 1.5em;
+  font-size: 1rem;
   color: rgba(0, 0, 0, 0.7);
 }
 
@@ -55,9 +56,10 @@ svg {
   user-select: none;
 }
 
-/*.container {
-  max-width: 410px;
-}*/
+.container {
+  width: 100%;
+  max-width: 406px;
+}
 
 #dom-grid {
   box-shadow: 1px 1px 0 0 var(--white) inset;
@@ -100,7 +102,7 @@ svg {
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 #size-selector .size-option.is-selected {
@@ -117,7 +119,7 @@ svg {
   width: 32px;
   height: 32px;
   padding: 8px;
-  border-radius: 2px;
+  border-radius: 4px;
   box-shadow: inset 0 0 0 4px #fff;
 }
 
@@ -126,7 +128,7 @@ svg {
 }
 
 input {
-  display: block;
+  display: none;
 }
 
 .sidebar {
@@ -139,7 +141,8 @@ input {
 }
 
 button {
-  border-radius: 2px;
+  font-size: 1rem;
+  border-radius: 4px;
   cursor: pointer;
   background: none;
   padding: 0.75rem 1.5rem;
@@ -157,9 +160,32 @@ button.primary {
   border-width: 0;
 }
 
+button.download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+button.download:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url("./data-download.svg");
+}
+
 .controls {
   display: flex;
   gap: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions button {
+  flex-grow: 1;
 }
 
 span.key {
